@@ -23,9 +23,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     # We are only using a single app, so we redirect all urls there
-    path('', RedirectView.as_view(url='bibliothek/', permanent=True)),
+    path('', RedirectView.as_view(url='library/', permanent=True)),
     path('admin/', admin.site.urls),
-    path("bibliothek", include("bibliothek.urls")),
+    path("library/", include("library.urls")),
 
 ]
 

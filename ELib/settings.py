@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Custom apps
-    'bibliothek.apps.BibliothekConfig',
+    'library.apps.LibraryConfig',
 ]
 
 MIDDLEWARE = [
