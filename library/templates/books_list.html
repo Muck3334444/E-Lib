@@ -1,1 +1,26 @@
-How do you do
+{% extends "base_datatable.html" %}
+
+{% block title %}Books{% endblock %}
+{% block header %}Books{% endblock %}
+{% block center %}
+    <table id="tableBooks" class="table table-striped table-bordered border">
+        <thead class="thead-light">
+            <th>Title</th>
+            <th>ISBN</th>
+            <th>Summary</th>
+        </thead>
+        <tbody>
+            {% for book in books %}
+                <tr>
+                    <td><a href="{% url 'book-detail' book.pk %}">{{ book.title }}</a></td>
+                    <td>{{ book.isbn }}</td>
+                    <td>{{ book.summary|truncatechars:100 }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block table-name %}
+    '#tableBooks'
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+ 
+{% block js-inside-document-ready %}
+    {% block datatable %}
+        $({% block table-name %}{% endblock %}).DataTable({
+            dom: '<"row mb-4"<"col-10 d-flex justify-content-start"f>>' +
+                    '<"row"<"col-4"l><"col-4"i><"col-4"p>>' +
+                    't' +
+                    '<"row mb-5"<"col-4"><"col-4"><"col-4"p>>',
+            "pageLength": 25,
+            "order": [[ 0, "asc" ]]
+        });
+    {% endblock %}
+{% endblock %}
