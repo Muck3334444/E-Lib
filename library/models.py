@@ -10,7 +10,7 @@ class Book(models.Model):
     """
     title = models.CharField(max_length=256)
     isbn = models.CharField(max_length=32)
-    summary = models.CharField(max_length=2048)
+    summary = models.TextField()
     author = models.ManyToManyField("Author")
     language = models.ManyToManyField("Language")
 
