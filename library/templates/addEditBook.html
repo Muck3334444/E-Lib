@@ -17,6 +17,11 @@
                     <div class="form-text text-danger">{{ form.isbn.errors }}</div>
                 </div>
                 <div class="mb-3">
+                    {{ form.price.label_tag }}
+                    {{ form.price }}
+                    <div class="form-text text-danger">{{ form.price.errors }}</div>
+                </div>
+                <div class="mb-3">
                     {{ form.summary.label_tag }}
                     {{ form.summary }}
                     <div class="form-text text-danger">{{ form.summary.errors }}</div>
