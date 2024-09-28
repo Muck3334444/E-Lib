@@ -16,13 +16,13 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     </head>
     <body>
-        <div class="container-fluid">
+        {% include 'navbar.html' %}
+        <br>
+        <div class="container-fluid mt-5">
             <div class="row content">
                 <div class="col-12">
                     <header>
                         <h1 class="display-5">{% block header %} Default Title {% endblock %}</h1>
-                        <br>
-                        <br>
                     </header>
                     {% block center %}
                     {% endblock %}
@@ -38,5 +38,4 @@
             });
         </script>
     </body>
-
 </html>

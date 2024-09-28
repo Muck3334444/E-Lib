@@ -2,21 +2,22 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from .forms import BookForm
 from .models import Book
-
+from django.contrib.auth.decorators import login_required
 from library.models import Book
-# Create your views here.
 
 
 def index(request):
     return render(request, "index.html")
 
+
+@login_required
 def BooksStorageListView(request):
     context = {
         "books": Book.objects.all()
     }
     return render(request, "booksStorage_list.html", context=context)
 
-
+@login_required
 def addOrEditBookView(request, bookId=None):
     if bookId:
         # Editing an existing book

@@ -20,13 +20,18 @@ from django.urls import include
 from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.views import LoginView, LogoutView
+
+from ELib.views import logoutView, signupView
 
 urlpatterns = [
     # We are only using a single app, so we redirect all urls there
     path('', RedirectView.as_view(url='library/', permanent=True)),
     path('admin/', admin.site.urls),
     path("library/", include("library.urls")),
-
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', logoutView, name='logout'),
+    path('signup/', signupView, name='signup'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

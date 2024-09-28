@@ -4,6 +4,7 @@ All Models concerning Books
 
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.contrib.auth.models import User
 
 class Book(models.Model):
     """
@@ -41,6 +42,7 @@ class Lease(models.Model):
     dueBack = models.DateField(null=True)
     returnDate = models.DateField(null=True)
     leaseDate = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Rating(models.Model):
     """
@@ -51,6 +53,7 @@ class Rating(models.Model):
             MinValueValidator(1) # Min is 1
         ])
     bookInstance = models.ForeignKey(Book, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class Reservation(models.Model):
@@ -60,6 +63,7 @@ class Reservation(models.Model):
     bookInstance = models.ForeignKey(BookInstance, on_delete=models.CASCADE)
     creationDate = models.DateTimeField(auto_now_add=True)
     isActive = models.BooleanField(default=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class Language(models.Model):

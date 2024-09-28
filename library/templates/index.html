@@ -3,5 +3,8 @@
 {% block title %}Welcome to the Library{% endblock %}
 {% block header %}Welcome to the Library{% endblock %}
 {% block center %}
-    <a href="{% url 'books-storage'%}">Book List Employee</a>
+    <p><a href="{% url 'books-storage'%}">Book List Employee</a></p>
+    <p><a href="{% url 'login'%}">Log in</a></p>
+    <p><a href="{% url 'logout'%}">Log out</a></p>
+    <p><a href="{% url 'signup'%}">Register</a></p>
 {% endblock %}

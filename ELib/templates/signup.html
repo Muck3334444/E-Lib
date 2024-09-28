@@ -1,0 +1,32 @@
+{% extends "base_datatable.html" %}
+
+{% block title %}Signup{% endblock %}
+{% block header %}{% endblock %}
+{% block center %}
+    <div class="container mt-5">
+        <h2 class="text-center">Sign Up</h2>
+
+        <!-- Show error messages -->
+        {% if messages %}
+        <div class="alert alert-danger">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}  <!-- Render the form fields -->
+                    <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                </form>
+
+                <p class="mt-3 text-center">
+                    Already have an account? <a href="{% url 'login' %}">Login</a>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
