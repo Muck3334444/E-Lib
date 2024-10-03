@@ -27,7 +27,7 @@ def addOrEditBookView(request, bookId=None):
         book = None
 
     if request.method == 'POST':
-        form = BookForm(request.POST, instance=book)
+        form = BookForm(request.POST, request.FILES, instance=book)
         if form.is_valid():
             form.save()  # Save the form (this will either create or update the book)
             return redirect('books-storage')  # Redirect to the book list page after submission
