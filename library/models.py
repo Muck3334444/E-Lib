@@ -12,11 +12,12 @@ class Book(models.Model):
     """
     title = models.CharField(max_length=256)
     isbn = models.CharField(max_length=32)
-    summary = models.TextField()
+    summary = models.TextField(default="")
     author = models.ManyToManyField("Author")
     language = models.ManyToManyField("Language")
     language = models.ManyToManyField("Genre")
-    price = models.FloatField()
+    price = models.FloatField(null=True)
+    image = models.ImageField(null=True, blank=True)
 
     def __str__(self) -> str:
         return self.title

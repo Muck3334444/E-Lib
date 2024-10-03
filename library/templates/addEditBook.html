@@ -4,28 +4,39 @@
 {% block center %}
         <div class="container">
             <h1 class="my-4">{% if bookId %}Edit Book{% else %}Add a New Book{% endif %}</h1>
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="mb-3">
-                    {{ form.title.label_tag }}
+                    <label for="title">Title</label>
                     {{ form.title }}
                     <div class="form-text text-danger">{{ form.title.errors }}</div>
                 </div>
                 <div class="mb-3">
-                    {{ form.isbn.label_tag }}
+                    <label for="isbn">ISBN</label>
                     {{ form.isbn }}
                     <div class="form-text text-danger">{{ form.isbn.errors }}</div>
                 </div>
                 <div class="mb-3">
-                    {{ form.price.label_tag }}
+                    <label for="price">Price</label>
                     {{ form.price }}
                     <div class="form-text text-danger">{{ form.price.errors }}</div>
                 </div>
                 <div class="mb-3">
-                    {{ form.summary.label_tag }}
+                    <label for="summary">Summary</label>
                     {{ form.summary }}
                     <div class="form-text text-danger">{{ form.summary.errors }}</div>
                 </div>
+                <div class="mb-3">
+                    <label for="image">Cover Image</label>
+                    {{ form.image }}
+                    <div class="form-text text-danger">{{ form.image.errors }}</div>
+                </div>
+                
+                {% if form.instance and form.instance.image %}
+                    <div class="mb-3">
+                        <img src="{{ form.instance.image.url }}" alt="Book Cover" class="img-fluid">
+                    </div>
+                {% endif %}
                 <button type="submit" class="btn btn-primary">
                     {% if bookId %}Update Book{% else %}Add Book{% endif %}
                 </button>
