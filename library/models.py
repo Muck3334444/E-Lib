@@ -15,12 +15,49 @@ class Book(models.Model):
     summary = models.TextField(default="")
     author = models.ManyToManyField("Author")
     language = models.ManyToManyField("Language")
-    language = models.ManyToManyField("Genre")
+    genre = models.ManyToManyField("Genre")
     price = models.FloatField(null=True)
     image = models.ImageField(null=True, blank=True)
 
     def __str__(self) -> str:
         return self.title
+    
+    @property
+    def averageRating(self):
+        ratings = self.rating_set.all()
+        if len(ratings) == 0:
+            return None
+        total = 0
+        for rating in ratings:
+            total += rating.rating
+        return round(total / len(ratings),1)
+    
+    @property
+    def languages(self):
+        if len(self.language.all()) == 0:
+            return "Keine Angaben"
+        allLanguages = ""
+        for language in self.language.all():
+            allLanguages += f"{language.name}, "
+        return allLanguages[:-2] # Remove the comma and space from the end
+    
+    @property
+    def genres(self):
+        if len(self.genre.all()) == 0:
+            return "Keine Angaben"
+        allGenres = ""
+        for genre in self.genre.all():
+            allGenres += f"{genre.name}, "
+        return allGenres[:-2] # Remove the comma and space from the end
+    
+    @property
+    def authors(self):
+        if len(self.author.all()) == 0:
+            return ""
+        allAuthors = ""
+        for author in self.author.all():
+            allAuthors += f"{author.name}, "
+        return allAuthors[:-2] # Remove the comma and space from the end
 
 
 class BookInstance(models.Model):
@@ -28,7 +65,7 @@ class BookInstance(models.Model):
     Describes the physical instance of a book
     """
     uniqueId = models.CharField(max_length=64, unique=True)
-    imprint = models.CharField(max_length=512)
+    imprint = models.CharField(max_length=512, default="")
     book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True) # If the book is deleted we still want to know that it existed for a history
     
     def __str__(self) -> str:
@@ -52,8 +89,8 @@ class Rating(models.Model):
     rating = models.IntegerField(validators=[
             MaxValueValidator(5), # Max allowed value is 5 stars
             MinValueValidator(1) # Min is 1
-        ])
-    bookInstance = models.ForeignKey(Book, on_delete=models.CASCADE)
+        ], null=True)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
@@ -93,7 +130,7 @@ class Genre(models.Model):
     """
     Describes the possible Genre
     """
-    name = models.CharField(max_length=128)
+    name = models.CharField(max_length=128, unique=True)
     description = models.CharField(max_length=512)
 
     def __str__(self) -> str:
