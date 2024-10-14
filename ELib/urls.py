@@ -22,7 +22,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, LogoutView
 
-from ELib.views import logoutView, signupView
+from ELib.views import logoutView, signupView, search_books
 
 urlpatterns = [
     # We are only using a single app, so we redirect all urls there
@@ -32,6 +32,7 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', logoutView, name='logout'),
     path('signup/', signupView, name='signup'),
+    path('search_books', search_books, name='search_books'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
