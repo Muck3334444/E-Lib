@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET
 from django.http import JsonResponse
 from library.models import Book
+from django.db.models import Q
 
 def signupView(request):
     if request.method == 'POST':
@@ -39,7 +40,8 @@ def search_books(request):
 
     if searchBar_input: 
         try:
-            books = Book.objects.filter(name__icontains=searchBar_input)[:5]
+            inputparam = request.GET.get('searchBar_input', '')  # Wert vom Query-Parameter holen
+            books = Book.objects.filter(Q(title__icontains=inputparam) | Q(isbn__icontains=inputparam))[:5]  # LIMIT 5
             result = [{'title': book.title, 'isbn': book.isbn} for book in books]
 
             if books.exists():

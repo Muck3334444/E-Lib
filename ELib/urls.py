@@ -32,7 +32,7 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', logoutView, name='logout'),
     path('signup/', signupView, name='signup'),
-    path('search_books', search_books, name='search_books'),
+    path('search_books/', search_books, name='search_books'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

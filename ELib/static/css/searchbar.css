@@ -1,0 +1,65 @@
+.search_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%; 
+}
+
+.search_field {
+    flex: 0 0 50%; 
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.search_button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.search_button:hover {
+    background-color: #0056b3;
+}
+
+.results_container {
+    width: 100%; 
+    max-width: 500px; 
+    margin: 20px auto; 
+    border: 1px solid #ddd; 
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px; 
+    background-color: #fff; 
+    display: block; 
+}
+
+.book_block {
+    background-color: #f8f9fa; 
+    border: 1px solid #ddd; 
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px; 
+    width: 100%; 
+    box-sizing: border-box; 
+}
+
+.book_title {
+    font-size: 18px;
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.book_isbn {
+    color: #555;
+    font-size: 14px;
+}
