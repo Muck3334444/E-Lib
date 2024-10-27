@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
+
+from library.functions import is_employee
 from .forms import BookForm
 from .models import Author, Book, BookInstance, Genre, Language, Rating, Reservation
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from library.models import Book
 from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
 def index(request):
@@ -13,6 +14,7 @@ def index(request):
 
 
 @login_required
+@user_passes_test(is_employee)
 def BooksStorageListView(request):
     context = {
         "books": Book.objects.all()
@@ -20,6 +22,7 @@ def BooksStorageListView(request):
     return render(request, "booksStorage_list.html", context=context)
 
 @login_required
+@user_passes_test(is_employee)
 def addOrEditBookView(request, bookId=None):
     if bookId:
         # Editing an existing book
