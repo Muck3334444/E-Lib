@@ -47,6 +47,12 @@ INSTALLED_APPS = [
     'library.apps.LibraryConfig',
 ]
 
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',  # Bootstrap verwendet `danger` statt `error` als Klasse
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
