@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib import messages
+from django.contrib.auth.views import LoginView
 from ELib.forms import SignupForm
 from django.contrib.auth.views import LogoutView
 
@@ -19,6 +20,13 @@ def signupView(request):
 
     return render(request, 'signup.html', {'form': form})
 
+
+class ELibLoginView(LoginView):
+    def form_invalid(self, form):
+        # Fehlermeldung an die Nachrichtenübermittlung (messages framework) übergeben
+        messages.error(self.request, "Invalid username or password. Please try again.")
+        return super().form_invalid(form)
+    
 
 def logoutView(request):
     if request.method == 'POST':
