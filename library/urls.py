@@ -9,4 +9,6 @@ urlpatterns = [
     path('rate/', views.giveRating, name='rate_book'),
     path('add-book/', views.addOrEditBookView, name='add-book'),
     path('edit-book/<int:bookId>/', views.addOrEditBookView, name='edit-book'),
+    path('add-author/', views.addAuthor, name='add-author'),
+
 ]
