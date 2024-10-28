@@ -10,5 +10,6 @@ urlpatterns = [
     path('add-book/', views.addOrEditBookView, name='add-book'),
     path('edit-book/<int:bookId>/', views.addOrEditBookView, name='edit-book'),
     path('add-author/', views.addAuthor, name='add-author'),
+    path('employee/', views.employeeIndex, name='employee-index'),
 
 ]

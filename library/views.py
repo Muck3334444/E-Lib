@@ -78,6 +78,11 @@ def addAuthor(request):
         form = AuthorForm()
     return render(request, 'addAuthor.html', {'form': form})
 
+@login_required
+@user_passes_test(is_employee)
+def employeeIndex(request):
+    return render(request, "employeeIndex.html")
+
 
 def bookDetail(request, pk):
     book = Book.objects.get(pk=pk)
