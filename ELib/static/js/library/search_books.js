@@ -28,7 +28,12 @@ function display_search_result(books) {
     books.forEach(book => {
         const book_Block = document.createElement('div');
         book_Block.className = 'book_block';
-        book_Block.innerHTML = `<h3 class="book_title">${book.title}</h3><p class="book_isbn">ISBN: ${book.isbn}</p>`;
+        book_Block.innerHTML = `
+            <h3 class="book_title">${book.title}</h3>
+            <p class="book_isbn">ISBN: ${book.isbn}</p>
+            <div class="book_image">
+                    <img src="${book.image.url}" alt="${book.title} Cover" />
+                </div>`;
         result_Container.appendChild(book_Block);
     });  
 };

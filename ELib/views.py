@@ -42,7 +42,7 @@ def search_books(request):
         try:
             inputparam = request.GET.get('searchBar_input', '')  # Wert vom Query-Parameter holen
             books = Book.objects.filter(Q(title__icontains=inputparam) | Q(isbn__icontains=inputparam))[:5]  # LIMIT 5
-            result = [{'title': book.title, 'isbn': book.isbn} for book in books]
+            result = [{'title': book.title, 'isbn': book.isbn, 'image': book.image} for book in books]
 
             if books.exists():
                 return JsonResponse({

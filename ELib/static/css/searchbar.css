@@ -44,22 +44,53 @@
 }
 
 .book_block {
-    background-color: #f8f9fa; 
-    border: 1px solid #ddd; 
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
     border-radius: 5px;
     padding: 15px;
-    margin-bottom: 10px; 
-    width: 100%; 
-    box-sizing: border-box; 
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.book_image {
+    flex: 0 0 60px; /* Adjust size as needed */
+    margin-right: 15px;
+}
+
+.book_image img {
+    width: 60px; /* Adjust width as needed */
+    height: auto;
+    border-radius: 3px;
+}
+
+.book_info {
+    flex-grow: 1;
 }
 
 .book_title {
     font-size: 18px;
-    margin: 0 0 10px 0;
+    margin: 0 0 5px 0;
     color: #333;
 }
 
 .book_isbn {
     color: #555;
     font-size: 14px;
+}
+
+
+.no_results {
+    text-align: center;
+    font-size: 16px;
+    color: #dc3545;
+    background-color: #f8d7da;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
