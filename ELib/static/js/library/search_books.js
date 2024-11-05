@@ -30,10 +30,15 @@ function display_search_result(books) {
         book_Block.className = 'book_block';
         book_Block.innerHTML = `
             <h3 class="book_title">${book.title}</h3>
-            <p class="book_isbn">ISBN: ${book.isbn}</p>
-            <div class="book_image">
-                    <img src="${book.image.url}" alt="${book.title} Cover" />
-                </div>`;
+            <p class="book_isbn">ISBN: ${book.isbn}</p>`;
+        if (book.image_url) {
+            const imgElement = document.createElement("img");
+            imgElement.src = book.image_url;
+            imgElement.alt = `${book.title} Cover`;
+            imgElement.className = "book_image";
+            book_Block.appendChild(imgElement);
+        }
+
         result_Container.appendChild(book_Block);
     });  
 };
