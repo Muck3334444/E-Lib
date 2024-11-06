@@ -9,4 +9,5 @@ urlpatterns = [
     path('rate/', views.giveRating, name='rate_book'),
     path('add-book/', views.addOrEditBookView, name='add-book'),
     path('edit-book/<int:bookId>/', views.addOrEditBookView, name='edit-book'),
+    path('book_instance', views.getBookInstances, name='book_instances'),
 ]

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Instances of Book: {{book}}{% endblock %}
+{% block header %}{% endblock %}
+{% block center %}
+<div class="instance-detail-container">
+    <h2>Instanzen zum Buch: <span>"Harry Potter und eine Stein"</span></h2>
+
+    <button class="instance-detail-add-button">
+        Neues Instanz hinzufügen
+        <i class="instance-detial-add-icon">+</i>
+    </button>
+
+    <div class="instance-detail-container">
+        {% for instance_status in book_instances_status %}
+            <div class="instance-detail-card">
+                <div class="instance-detail-header">
+                    <span class="instance-detail-id">instance.uniqueId</span>
+                    {% if instance_status.reserved %}
+                        <span class="instance-detail-status-indicator red"></span>
+                    {% else %}
+                        <span class="instance-detail-status-indicator green"></span>
+                    {% endif %}
+                </div>
+                <p class="instance-detail-status-label">Zustand</p>
+                <div class="instance-detail-description">
+                    Zustand                
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

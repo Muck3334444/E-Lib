@@ -1,30 +1,33 @@
 function search_books() {
     const input = document.getElementById('search_field_searchbar').value;  
-    const url = document.getElementById('search_button_searchbar').getAttribute('data_url');
+    const search_button_searchbar = document.getElementById('search_button_searchbar');
+    const search_books_url = search_button_searchbar.getAttribute('data_search_books_url');
+    const book_detail_url = search_button_searchbar.getAttribute('data_book_detail_url');
 
     $.ajax({
-        url: url,
+        url: search_books_url,
         type: 'GET',
         data: {
             'searchBar_input': input
         },
         success: function(response) {
             if (response.success && response.books.length > 0) {
-                display_search_result(response.books)
+                display_search_result(response.books, book_detail_url);
             } else {
                 alert("Fehler: " + response.message);
             }
         },
         error: function(jqXHR, status, error) {
-            alert("Fehler: " + error.message)
+            alert("Fehler: " + error.message);
         }
     });
 }
 
-function display_search_result(books) {
+function display_search_result(books, book_detail_url) {
     const result_Container = document.getElementById('results_container_searchbar');
     result_Container.classList.add('results_container');
     result_Container.innerHTML = '';
+
     books.forEach(book => {
         const book_Block = document.createElement('div');
         book_Block.className = 'book_block';
@@ -39,6 +42,13 @@ function display_search_result(books) {
             book_Block.appendChild(imgElement);
         }
 
+        const book_detail_url_query_param = `${book_detail_url}?book_id=${book.pk}`;
+
+        const book_detail_link = document.createElement('a');
+        book_detail_link.setAttribute('href', book_detail_url_query_param);
+        book_detail_link.textContent = 'Details anzeigen';
+        book_Block.appendChild(book_detail_link);
+
         result_Container.appendChild(book_Block);
-    });  
+    });
 };

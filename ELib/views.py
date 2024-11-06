@@ -46,7 +46,8 @@ def search_books(request):
                     {
                         'title': book.title, 
                         'isbn': book.isbn, 
-                        'image_url': book.image.url if book.image else None
+                        'image_url': book.image.url if book.image else None,
+                        'book_id': book.pk
                     } for book in books
                 ]
 
