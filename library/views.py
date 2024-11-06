@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
+
+from library.functions import is_employee
 from .forms import BookForm
-from .models import Book, BookInstance, Rating, Reservation
-from django.contrib.auth.decorators import login_required
+from .models import Author, Book, BookInstance, Genre, Language, Rating, Reservation
+from django.contrib.auth.decorators import login_required, user_passes_test
 from library.models import Book
 from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.views.decorators.http import require_GET
 
@@ -14,6 +15,7 @@ def index(request):
 
 
 @login_required
+@user_passes_test(is_employee)
 def BooksStorageListView(request):
     context = {
         "books": Book.objects.all()
@@ -21,6 +23,7 @@ def BooksStorageListView(request):
     return render(request, "booksStorage_list.html", context=context)
 
 @login_required
+@user_passes_test(is_employee)
 def addOrEditBookView(request, bookId=None):
     if bookId:
         # Editing an existing book
@@ -32,12 +35,37 @@ def addOrEditBookView(request, bookId=None):
     if request.method == 'POST':
         form = BookForm(request.POST, request.FILES, instance=book)
         if form.is_valid():
-            form.save()  # Save the form (this will either create or update the book)
+            book = form.save()  # Save the form (this will either create or update the book)
+            selectedLanguages = request.POST.getlist('languages')
+            selectedGenres = request.POST.getlist('genres')
+            selectedAuthors = request.POST.getlist('authors')
+            
+            # Set many-to-many relationships
+            book.language.set(selectedLanguages)
+            book.genre.set(selectedGenres)
+            book.author.set(selectedAuthors)
+            
+            # Save again to finalize M2M relationships
+            book.save()
+
             return redirect('books-storage')  # Redirect to the book list page after submission
     else:
         form = BookForm(instance=book)  # Prepopulate the form with the book data if editing
+    
+    context = {
+        "form": form,
+        "bookId": bookId,
+        "languages": list(Language.objects.all()),
+        "genres": list(Genre.objects.all()),
+        "authors": list(Author.objects.all()),
+    }
 
-    return render(request, 'addEditBook.html', {'form': form, 'bookId': bookId})
+    if book:
+        context["selectedLanguages"] = [lang.pk for lang in book.language.all()]
+        context["selectedGenres"] = [lang.pk for lang in book.genre.all()]
+        context["selectedAuthors"] = [lang.pk for lang in book.author.all()]
+
+    return render(request, 'addEditBook.html', context=context)
 
 
 
