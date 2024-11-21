@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{% static 'css/searchbar.css' %}">
 <div class="search_container">
     <input type="text" class="search_field" placeholder="Suche..." id="search_field_searchbar">
-    <button class="btn btn-primary" data_search_books_url="{% url 'search_books' %}" data_book_detail_url="{% url 'book-detail' %}" onclick="search_books()" id="search_button_searchbar">
+    <button class="btn btn-primary" data_search_books_url="{% url 'search_books' %}"  onclick="search_books()" id="search_button_searchbar">
         <i class="bi bi-search"></i>
     </button>    
 </div>
