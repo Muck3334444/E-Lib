@@ -2,115 +2,115 @@
 {% block title %}{% if bookId %}Edit Book{% else %}Add Book{% endif %}{% endblock %}
 {% block header %}{% endblock %}
 {% block center %}
-        <div class="container">
-            <h1 class="my-4">{% if bookId %}Edit Book{% else %}Add a New Book{% endif %}</h1>
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
+    <div class="container">
+        <h1 class="my-4">{% if bookId %}Edit Book{% else %}Add a New Book{% endif %}</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="title">Title</label>
+                {{ form.title }}
+                <div class="form-text text-danger">{{ form.title.errors }}</div>
+            </div>
+            <div class="mb-3">
+                <label for="isbn">ISBN</label>
+                {{ form.isbn }}
+                <div class="form-text text-danger">{{ form.isbn.errors }}</div>
+            </div>
+            <div class="mb-3">
+                <label for="price">Price</label>
+                {{ form.price }}
+                <div class="form-text text-danger">{{ form.price.errors }}</div>
+            </div>
+            <div class="mb-3">
+                <label for="summary">Summary</label>
+                {{ form.summary }}
+                <div class="form-text text-danger">{{ form.summary.errors }}</div>
+            </div>
+            <div class="mb-3">
+                <label for="image">Cover Image</label>
+                {{ form.image }}
+                <div class="form-text text-danger">{{ form.image.errors }}</div>
+            </div>
+            
+            {% if form.instance and form.instance.image %}
                 <div class="mb-3">
-                    <label for="title">Title</label>
-                    {{ form.title }}
-                    <div class="form-text text-danger">{{ form.title.errors }}</div>
+                    <img src="{{ form.instance.image.url }}" alt="Book Cover" class="img-fluid">
                 </div>
-                <div class="mb-3">
-                    <label for="isbn">ISBN</label>
-                    {{ form.isbn }}
-                    <div class="form-text text-danger">{{ form.isbn.errors }}</div>
+            {% endif %}
+            <div class="form-group mb-3">
+                <label for="languages">Languages</label>
+                <div class="multi-select-wrapper">
+                    <select id="languages" name="languages" class="form-control" multiple style="height: 100px; overflow-y: auto;" onchange="updateSelected('languages')">
+                        {% for lang in languages %}
+                            <option value="{{ lang.id }}" {% if lang.id in selectedLanguages %}selected{% endif %}>{{ lang.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="selected-list" id="selected-languages">Selected: {{ selectedLanguages|join:", " }}</div>
                 </div>
-                <div class="mb-3">
-                    <label for="price">Price</label>
-                    {{ form.price }}
-                    <div class="form-text text-danger">{{ form.price.errors }}</div>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label for="genres">Genres</label>
+                <div class="multi-select-wrapper">
+                    <select id="genres" name="genres" class="form-control" multiple style="height: 100px; overflow-y: auto;" onchange="updateSelected('genres')">
+                        {% for genre in genres %}
+                            <option value="{{ genre.id }}" {% if genre.id in selectedGenres %}selected{% endif %}>{{ genre.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="selected-list" id="selected-genres">Selected: {{ selectedGenres|join:", " }}</div>
                 </div>
-                <div class="mb-3">
-                    <label for="summary">Summary</label>
-                    {{ form.summary }}
-                    <div class="form-text text-danger">{{ form.summary.errors }}</div>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label for="authors">Authors</label>
+                <div class="multi-select-wrapper">
+                    <select id="authors" name="authors" class="form-control" multiple style="height: 100px; overflow-y: auto;" onchange="updateSelected('authors')">
+                        {% for author in authors %}
+                            <option value="{{ author.id }}" {% if author.id in selectedAuthors %}selected{% endif %}>{{ author.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="selected-list" id="selected-authors">Selected: {{ selectedAuthors|join:", " }}</div>
                 </div>
-                <div class="mb-3">
-                    <label for="image">Cover Image</label>
-                    {{ form.image }}
-                    <div class="form-text text-danger">{{ form.image.errors }}</div>
-                </div>
-                
-                {% if form.instance and form.instance.image %}
-                    <div class="mb-3">
-                        <img src="{{ form.instance.image.url }}" alt="Book Cover" class="img-fluid">
-                    </div>
-                {% endif %}
-                <div class="form-group mb-3">
-                    <label for="languages">Languages</label>
-                    <div class="multi-select-wrapper">
-                        <select id="languages" name="languages" class="form-control" multiple style="height: 100px; overflow-y: auto;" onchange="updateSelected('languages')">
-                            {% for lang in languages %}
-                                <option value="{{ lang.id }}" {% if lang.id in selectedLanguages %}selected{% endif %}>{{ lang.name }}</option>
-                            {% endfor %}
-                        </select>
-                        <div class="selected-list" id="selected-languages">Selected: {{ selectedLanguages|join:", " }}</div>
-                    </div>
-                </div>
-                
-                <div class="form-group mb-3">
-                    <label for="genres">Genres</label>
-                    <div class="multi-select-wrapper">
-                        <select id="genres" name="genres" class="form-control" multiple style="height: 100px; overflow-y: auto;" onchange="updateSelected('genres')">
-                            {% for genre in genres %}
-                                <option value="{{ genre.id }}" {% if genre.id in selectedGenres %}selected{% endif %}>{{ genre.name }}</option>
-                            {% endfor %}
-                        </select>
-                        <div class="selected-list" id="selected-genres">Selected: {{ selectedGenres|join:", " }}</div>
-                    </div>
-                </div>
-                
-                <div class="form-group mb-3">
-                    <label for="authors">Authors</label>
-                    <div class="multi-select-wrapper">
-                        <select id="authors" name="authors" class="form-control" multiple style="height: 100px; overflow-y: auto;" onchange="updateSelected('authors')">
-                            {% for author in authors %}
-                                <option value="{{ author.id }}" {% if author.id in selectedAuthors %}selected{% endif %}>{{ author.name }}</option>
-                            {% endfor %}
-                        </select>
-                        <div class="selected-list" id="selected-authors">Selected: {{ selectedAuthors|join:", " }}</div>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">
-                    {% if bookId %}Update Book{% else %}Add Book{% endif %}
-                </button>
-                <a href="{% url 'books-storage' %}" class="btn btn-secondary">Cancel</a>
-            </form>
-        </div>
-        <script>
-            function updateSelected(field) {
-                let selected = Array.from(document.getElementById(field).selectedOptions).map(option => option.text);
-                document.getElementById(`selected-${field}`).innerText = "Selected: " + (selected.join(", ") || "None");
-            }
+            </div>
+            <button type="submit" class="btn btn-primary">
+                {% if bookId %}Update Book{% else %}Add Book{% endif %}
+            </button>
+            <a href="{% url 'books-storage' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+    <script>
+        function updateSelected(field) {
+            let selected = Array.from(document.getElementById(field).selectedOptions).map(option => option.text);
+            document.getElementById(`selected-${field}`).innerText = "Selected: " + (selected.join(", ") || "None");
+        }
+    
+        // Initial update to show already selected items on page load
+        window.onload = function() {
+            updateSelected('languages');
+            updateSelected('genres');
+            updateSelected('authors');
+        };
+    </script>
+    <style>
+        .multi-select-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Abstand zwischen Select und Liste */
+        }
         
-            // Initial update to show already selected items on page load
-            window.onload = function() {
-                updateSelected('languages');
-                updateSelected('genres');
-                updateSelected('authors');
-            };
-        </script>
-        <style>
-            .multi-select-wrapper {
-                display: flex;
-                align-items: center;
-                gap: 10px; /* Abstand zwischen Select und Liste */
-            }
-            
-            .multi-select-wrapper select {
-                width: 33%; /* Begrenzt die Breite des Select-Feldes auf ein Drittel */
-            }
-            
-            .selected-list {
-                font-style: italic;
-                color: #6c757d;
-                white-space: nowrap;
-                max-width: 50%; /* optional, um Platz für die ausgewählten Elemente anzupassen */
-                overflow: hidden;
-                text-overflow: ellipsis; /* falls der Text zu lang ist, wird er abgeschnitten */
-            }
-        </style>
+        .multi-select-wrapper select {
+            width: 33%; /* Begrenzt die Breite des Select-Feldes auf ein Drittel */
+        }
+        
+        .selected-list {
+            font-style: italic;
+            color: #6c757d;
+            white-space: nowrap;
+            max-width: 50%; /* optional, um Platz für die ausgewählten Elemente anzupassen */
+            overflow: hidden;
+            text-overflow: ellipsis; /* falls der Text zu lang ist, wird er abgeschnitten */
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 {% endblock %}
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 

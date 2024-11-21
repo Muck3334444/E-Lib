@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 
 from library.functions import is_employee
-from .forms import BookForm
+from .forms import AuthorForm, BookForm
 from .models import Author, Book, BookInstance, Genre, Language, Rating, Reservation
 from django.contrib.auth.decorators import login_required, user_passes_test
 from library.models import Book
@@ -67,6 +67,22 @@ def addOrEditBookView(request, bookId=None):
 
     return render(request, 'addEditBook.html', context=context)
 
+@login_required
+@user_passes_test(is_employee)
+def addAuthor(request):
+    if request.method == 'POST':
+        form = AuthorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('books-storage')
+    else:
+        form = AuthorForm()
+    return render(request, 'addAuthor.html', {'form': form})
+
+@login_required
+@user_passes_test(is_employee)
+def employeeIndex(request):
+    return render(request, "employeeIndex.html")
 
 
 def bookDetail(request, pk):

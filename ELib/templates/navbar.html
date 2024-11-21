@@ -5,6 +5,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav ms-auto d-flex align-items-center">
                     {% if user.is_authenticated %}
+                        <span class="user-box me-2 px-3 py-1">{{ user.username }}</span>
                         <form method="post" action="{% url 'logout' %}" class="mb-0">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-outline-danger">Logout</button>
@@ -18,3 +19,12 @@
         <hr style="position: absolute; bottom: 0px; background-color: black; width: 100%; height: 2px; margin: 0; left: 0; opacity: 1">
     </nav>
 </div>
+
+<style>
+    .user-box {
+        background-color: #333333;
+        color: #ffffff;
+        border-radius: 4px;
+        font-weight: 500;
+    }
+</style>
