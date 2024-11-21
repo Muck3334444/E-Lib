@@ -27,14 +27,17 @@ function display_search_result(books) {
     result_Container.classList.add('results_container');
     result_Container.innerHTML = '';
 
-    console.log(books);
-
     books.forEach(book => {
         const book_Block = document.createElement('div');
+        const inner_div = document.createElement('div');
+        inner_div.className = 'book_inner_div';
+
+
         book_Block.className = 'book_block';
-        book_Block.innerHTML = `
+        inner_div.innerHTML = `
             <h3 class="book_title">${book.title}</h3>
             <p class="book_isbn">ISBN: ${book.isbn}</p>`;
+        book_Block.appendChild(inner_div);
         if (book.image_url) {
             const imgElement = document.createElement("img");
             imgElement.src = book.image_url;
@@ -44,10 +47,10 @@ function display_search_result(books) {
         }
 
 
-        const book_detail_link = document.createElement('a');
-        book_detail_link.setAttribute('href', book_detail_url_query_param);
-        book_detail_link.textContent = 'Details anzeigen';
-        book_Block.appendChild(book_detail_link);
+        // const book_detail_link = document.createElement('a');
+        // book_detail_link.setAttribute('href', book_detail_url_query_param);
+        // book_detail_link.textContent = 'Details anzeigen';
+        // book_Block.appendChild(book_detail_link);
 
         result_Container.appendChild(book_Block);
     });

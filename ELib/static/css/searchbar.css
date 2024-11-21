@@ -7,6 +7,13 @@
     width: 100%; 
 }
 
+.book_inner_div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    padding: 10px; 
+}
+
 .search_field {
     flex: 0 0 50%; 
     padding: 10px;
@@ -44,6 +51,7 @@
 }
 
 .book_block {
+    justify-content: space-between;
     display: flex;
     align-items: center;
     background-color: #f8f9fa;
@@ -55,8 +63,12 @@
 }
 
 .book_image {
-    flex: 0 0 60px; /* Adjust size as needed */
     margin-right: 15px;
+    float: right; /* Schiebt das Bild nach rechts */
+    max-width: 150px; /* Begrenzung der Bildbreite */
+    max-height: 200px; /* Begrenzung der Bildhöhe */
+    margin-left: 10px; /* Abstand zum Text */
+    
 }
 
 .book_image img {
