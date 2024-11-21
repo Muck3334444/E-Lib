@@ -22,7 +22,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView
 
-from ELib.views import ELibLoginView, logoutView, signupView
+from ELib.views import ELibLoginView, logoutView, signupView, search_books
 
 urlpatterns = [
     # We are only using a single app, so we redirect all urls there
