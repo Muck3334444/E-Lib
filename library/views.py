@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from library.models import Book
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_GET
 
 def index(request):
     return render(request, "index.html")
@@ -173,3 +174,24 @@ def giveRating(request):
     rating.save()
     
     return JsonResponse({'success': True, 'message': ''})
+
+@login_required
+@require_GET
+def getBookInstances(request):
+    book_instance_input = request.GET.get('book_instance_input', None)
+
+    book_instances_status = []
+
+    if book_instance_input:
+        book = Book.objects.get(pk=book_instance_input)
+        book_instances = BookInstance.objects.filter(book=book)
+
+        if book_instances:
+            for instance in book_instances:
+                reserved = Reservation.objects.filter(bookInstance=instance, isActive=True).exists()
+                book_instances_status.append({'instance': instance, 'reserved': reserved})
+
+
+    return render(request, 'book_instance.html', {
+        'book_instances_status': book_instances_status,
+    })

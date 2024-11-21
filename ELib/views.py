@@ -4,6 +4,11 @@ from django.contrib import messages
 from django.contrib.auth.views import LoginView
 from ELib.forms import SignupForm
 from django.contrib.auth.views import LogoutView
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_GET
+from django.http import JsonResponse
+from library.models import Book
+from django.db.models import Q
 
 def signupView(request):
     if request.method == 'POST':
@@ -35,3 +40,34 @@ def logoutView(request):
     
     # If not POST, just render the confirmation page
     return render(request, 'logout.html')
+
+@login_required
+@require_GET
+def search_books(request):
+    searchBar_input = request.GET.get('searchBar_input', None)
+
+    if searchBar_input: 
+        try:
+            inputparam = request.GET.get('searchBar_input', '')  # Wert vom Query-Parameter holen
+            books = Book.objects.filter(Q(title__icontains=inputparam) | Q(isbn__icontains=inputparam))[:5]  # LIMIT 5
+            result = [
+                    {
+                        'title': book.title, 
+                        'isbn': book.isbn, 
+                        'image_url': book.image.url if book.image else None,
+                        'book_id': book.pk
+                    } for book in books
+                ]
+
+            if books.exists():
+                return JsonResponse({
+                    'success': True, 
+                    'message': 'Es wurden Bücher zu der Suchanfrage gefunden.',
+                    'books': result 
+                })
+            else:
+                return JsonResponse({'success': False, 'message': 'Es gibt keine Bücher zu der Sucheingabe.'})
+        except Book.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'Fehler beim Datenbank aufruf.'})
+
+    return JsonResponse({'success': False, 'message': 'Es wurde kein Query-Parameter übergeben.'})

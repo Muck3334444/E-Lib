@@ -1,0 +1,13 @@
+{% load static %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="{% static 'css/searchbar.css' %}">
+<div class="search_container">
+    <input type="text" class="search_field" placeholder="Suche..." id="search_field_searchbar">
+    <button class="btn btn-primary" data_search_books_url="{% url 'search_books' %}" data_book_detail_url="{% url 'book-detail' %}" onclick="search_books()" id="search_button_searchbar">
+        <i class="bi bi-search"></i>
+    </button>    
+</div>
+
+<div id="results_container_searchbar"></div>
+<p id="no_results_message" class="no_results" style="display: none;">Keine Treffer zum Suchbegriff</p>
+<script src="{% static 'js/library/search_books.js' %}"></script>
