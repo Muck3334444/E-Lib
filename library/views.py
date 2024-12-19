@@ -17,7 +17,7 @@ def index(request):
 
 
 @login_required
-@user_passes_test(is_employee)
+# @user_passes_test(is_employee)
 def BooksStorageListView(request):
     context = {
         "books": Book.objects.all()
@@ -25,7 +25,7 @@ def BooksStorageListView(request):
     return render(request, "booksStorage_list.html", context=context)
 
 @login_required
-@user_passes_test(is_employee)
+# @user_passes_test(is_employee)
 def addOrEditBookView(request, bookId=None):
     if bookId:
         # Editing an existing book
@@ -70,7 +70,7 @@ def addOrEditBookView(request, bookId=None):
     return render(request, 'addEditBook.html', context=context)
 
 @login_required
-@user_passes_test(is_employee)
+# @user_passes_test(is_employee)
 def addAuthor(request):
     if request.method == 'POST':
         form = AuthorForm(request.POST)
@@ -82,7 +82,7 @@ def addAuthor(request):
     return render(request, 'addAuthor.html', {'form': form})
 
 @login_required
-@user_passes_test(is_employee)
+# @user_passes_test(is_employee)
 def employeeIndex(request):
     return render(request, "employeeIndex.html")
 
@@ -197,3 +197,33 @@ def getBookInstances(request):
     return render(request, 'book_instance.html', {
         'book_instances_status': book_instances_status,
     })
+
+from django.shortcuts import render, redirect
+from .models import Book, BookInstance
+
+@login_required
+@require_POST
+def addBookInstances(request):
+    if request.method == "POST":
+        unique_id = request.POST.get('uniqueId')
+        imprint = request.POST.get('imprint')
+        book_id = request.POST.get('book')
+
+        try:
+            book = Book.objects.get(pk=book_id)
+            BookInstance.objects.create(uniqueId=unique_id, imprint=imprint, book=book)
+            return render(request, 'add_book_instance.html', {
+                'books': Book.objects.all(),
+                'message': "Book instance added successfully!",
+                'message_type': 'success'
+            })
+        except Exception as e:
+            return render(request, 'add_book_instance.html', {
+                'books': Book.objects.all(),
+                'message': f"Error: {e}",
+                'message_type': 'error'
+            })
+    else:
+        return render(request, 'add_book_instance.html', {
+            'books': Book.objects.all()
+        })
