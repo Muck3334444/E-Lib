@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{% if bookId %}Edit Book{% else %}Add Book{% endif %}{% endblock %}
+{% block header %}{% endblock %}
+{% block center %}
+<title>Add Book Instance</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Add a New Book Instance</h1>
+        <form action="{% url 'add_book_instances' %}" method="POST">
+            {% csrf_token %}
+            <label for="uniqueId">Unique ID:</label>
+            <input type="text" id="uniqueId" name="uniqueId" placeholder="Enter a unique identifier for the book instance" required>
+            
+            <label for="imprint">Imprint:</label>
+            <input type="text" id="imprint" name="imprint" placeholder="Enter the imprint (e.g., publisher details)" required>
+            
+            <label for="book">Book:</label>
+            <select id="book" name="book" required>
+                <option value="" disabled selected>Select a book</option>
+                {% for book in books %}
+                    <option value="{{ book.id }}">{{ book.title }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Add Book Instance</button>
+        </form>
+
+        {% if message %}
+            <div class="message {{ message_type }}">
+                {{ message }}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
