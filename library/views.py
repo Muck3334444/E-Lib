@@ -11,7 +11,9 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.http import require_GET
 
 def index(request):
-    return render(request, "index.html")
+
+    context = {"books": [Book.objects.get(id=i) for i in range(1,5)]}
+    return render(request, "index.html", context=context)
 
 
 @login_required

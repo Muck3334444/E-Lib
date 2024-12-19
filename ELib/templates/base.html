@@ -18,10 +18,12 @@
     </head>
     <body>
         {% include 'navbar.html' %}
-        <br>
-        <br>
-        <br>
-        {% include 'searchbar.html' %}
+        {% if request.path != '/login/' %}
+            <br>
+            <br>
+            <br>
+            {% include 'searchbar.html' %}
+        {% endif %}
         <hr style="border-width: 3px; opacity:1;">
         <div class="container-fluid mt-5">
             <div class="row content">
