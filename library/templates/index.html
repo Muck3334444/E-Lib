@@ -1,8 +1,13 @@
 {% extends "base_datatable.html" %}
 
-{% block title %}Welcome to the Library{% endblock %}
-{% block header %}Welcome to the Library{% endblock %}
+{% block title %}Willkommen in der Bibliothek Düsseldorf{% endblock %}
+{% block header %}Willkommen in der Bibliothek Düsseldorf{% endblock %}
 {% block center %}
+    <h3>Best Sellers:</h3>
+    {% for book in books%}
+        <img src="{{ book.image.url }}" alt="Book Cover" class="book-cover img-fluid">
+    {% endfor %}
+
     <p><a href="{% url 'books-storage'%}">Book List Employee</a></p>
     <p><a href="{% url 'login'%}">Log in</a></p>
     <p><a href="{% url 'logout'%}">Log out</a></p>
