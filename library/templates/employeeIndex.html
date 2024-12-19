@@ -1,7 +1,7 @@
 {% extends "base_datatable.html" %}
 
-{% block title %}Welcome to the Library{% endblock %}
-{% block header %}Hello {{ user.username }} Welcome to the Library{% endblock %}
+{% block title %}Welcome to the Library Employee Page{% endblock %}
+{% block header %}Hello {{ user.username }} Welcome to the Library employee page{% endblock %}
 {% block center %}
     <p>Click <a href="{% url 'books-storage'%}">here</a> to see the current catalog of books.</p>
     <p>Click <a href="{% url 'add-author'%}">here</a> to add a new author.</p>

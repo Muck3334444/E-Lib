@@ -12,5 +12,5 @@ urlpatterns = [
     path('book_instance/<pk>', views.getBookInstances, name='book_instances'),
     path('add-author/', views.addAuthor, name='add-author'),
     path('employee/', views.employeeIndex, name='employee-index'),
-    path('add_book_instance/', views.addBookInstances, name='add_book_instances')
+    path('add_book_instance/', views.addBookInstances, name='add-book-instances')
 ]

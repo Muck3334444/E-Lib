@@ -11,7 +11,6 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.http import require_GET
 
 def index(request):
-
     context = {"books": [Book.objects.get(id=i) for i in range(1,5)]}
     return render(request, "index.html", context=context)
 
@@ -82,7 +81,7 @@ def addAuthor(request):
     return render(request, 'addAuthor.html', {'form': form})
 
 @login_required
-# @user_passes_test(is_employee)
+@user_passes_test(is_employee)
 def employeeIndex(request):
     return render(request, "employeeIndex.html")
 
@@ -224,6 +223,6 @@ def addBookInstances(request):
                 'message_type': 'error'
             })
     else:
-        return render(request, 'add_book_instance.html', {
+        return render(request, 'addBookInstance.html', {
             'books': Book.objects.all()
         })

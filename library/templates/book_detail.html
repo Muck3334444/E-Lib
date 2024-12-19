@@ -7,7 +7,11 @@
         <div class="row mt-5">
             <!-- Book Cover and Info -->
             <div class="col-md-3">
-                <img src="{{ book.image.url }}" alt="Book Cover" class="book-cover img-fluid">
+                {% if book.image %}
+                    <img src="{{ book.image.url }}" class="card-img-top" alt="{{ book.title }}">
+                {% else %}
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Platzhalter-Bild">
+                {% endif %}
                 <div>   
                     <div><strong>Sprachen:</strong> {{ book.languages }}</div> 
                     <div><strong>ISBN:</strong> {{ book.isbn }}</div>

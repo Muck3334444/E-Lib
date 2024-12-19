@@ -1,7 +1,11 @@
 <div>
     <nav class="navbar navbar-expand-lg navbar fixed-top" style="height:7%;background-color: #ffffff;opacity: 1;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'library' %}"><i class="bi bi-book-fill" style="opacity:0.9;"></i> E-Lib</a>
+            <a class="navbar-brand"href="{% url 'library' %}"><i class="bi bi-book-fill" style="opacity:0.9;"></i> E-Lib</a>
+            {% load custom_tags %}
+            {% if request.user|has_perm:"library.add_book" %}
+                <a class="navbar-brand" href="{% url 'employee-index' %}">Mitarbeiter Bereich</a>
+            {% endif %}
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav ms-auto d-flex align-items-center">
                     {% if user.is_authenticated %}
